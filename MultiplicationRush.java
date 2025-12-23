@@ -34,22 +34,23 @@ public class MultiplicationRush {
             ArrayList<Integer> alternatives = generateAlternatives(multiplicand, multiplier);
             printAlternatives(alternatives);
             
-            int userAnswer = Integer.valueOf(scanner.nextLine());
+            int selectedAlternative = Integer.valueOf(scanner.nextLine());
             
-            if(userAnswer == -1) {
+            while(!isAlternativeValid(selectedAlternative)) {
+                System.out.println("\nAlternativa inválida. Apenas valores de 1 a 4 serão aceitos.");
+                System.out.println(multiplicand + " × " + multiplier);
+                
+                printAlternatives(alternatives);
+                selectedAlternative = Integer.valueOf(scanner.nextLine());
+            }
+            
+            if(selectedAlternative == -1) {
                 break;
             }
 
-            while(userAnswer < 1 || userAnswer > 4) {
-                System.out.println("\nAlternativa inválida. Apenas valores de 1 a 4 serão aceitos.");
-                
-                printAlternatives(alternatives);
-                userAnswer = Integer.valueOf(scanner.nextLine());
-            }
-            
-            int answerIndex = userAnswer - 1;
+            int alternativeIndex = selectedAlternative - 1;
 
-            if(alternatives.get(answerIndex) == (multiplicand * multiplier)) {
+            if(alternatives.get(alternativeIndex) == (multiplicand * multiplier)) {
                 correctAnswers++;
                 continue;
             }
@@ -64,6 +65,14 @@ public class MultiplicationRush {
     public static int generateRandomInt(int min, int max) {
         Random numberGenerator = new Random();
         return numberGenerator.nextInt(max - min + 1) + min;
+    }
+
+    public static boolean isAlternativeValid(int alternative) {
+        if(alternative != -1 && (alternative < 0 || alternative > 4)) {
+            return false;
+        }
+
+        return true;
     }
 
     public static void printAlternatives(ArrayList<Integer> alternatives) {

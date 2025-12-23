@@ -34,13 +34,20 @@ public class MultiplicationRush {
             ArrayList<Integer> alternatives = generateAlternatives(multiplicand, multiplier);
             printAlternatives(alternatives);
             
-            //TODO: limitar respostas do usuário para 1...4
             int userAnswer = Integer.valueOf(scanner.nextLine());
-            int answerIndex = userAnswer - 1;
-
+            
             if(userAnswer == -1) {
                 break;
             }
+
+            while(userAnswer < 1 || userAnswer > 4) {
+                System.out.println("\nAlternativa inválida. Apenas valores de 1 a 4 serão aceitos.");
+                
+                printAlternatives(alternatives);
+                userAnswer = Integer.valueOf(scanner.nextLine());
+            }
+            
+            int answerIndex = userAnswer - 1;
 
             if(alternatives.get(answerIndex) == (multiplicand * multiplier)) {
                 correctAnswers++;
